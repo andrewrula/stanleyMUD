@@ -1,0 +1,58 @@
+Changelog
+    Milestone 1:
+        -Basic End-to-End of Dungeon Level 1
+        -Inventory
+        -Rooms
+        -Doors
+        -Locks
+        -Using Keys on Doors
+        -Picking Up Items
+
+    Milestone 2:
+        -Ported project to github.    
+        -Decided on item directory format.
+
+TODO
+    -User Input + Core Game Loop (User Input --> Game Does a Thing --> Ask for New Input )
+        -Translation layer from input --> game terms    
+        -Help Command (To teach you to play)
+    -Item Expansion!
+        REFACTOR: Support itemID vs display name
+        -Add Item Directory (support all current items?)
+        -Inspect Items -> Read Description Out
+        -Teach Players About Teleporting!
+            -Add Item Descriptions
+    -Room Expansion
+        -TECH DEBT: Refactor roomList to use better format
+        -Inspect current room -> Display description
+        -Flesh out room descriptions in RoomList
+    -Refactor: Use items that arent keys
+    -Dynamic Events (Events triggered on something happening)
+    -Dungeon Expansion 1 - The Ancient Temple!
+        -Tons more rooms! 
+            - Lots of keys of different forms 
+        -Secret doors.
+            -Modify descriptions depending on door being detected.
+        -Solve puzzles!
+            -Sphinx's Riddle
+            -Shrine of the Silver Monkey
+
+    Milestone 3:
+        -Menu screen on load
+            -New Game, Load Game, Exit
+        -Add ability to Save game
+        -Add Game Over condition. --> Back to Menu
+        -Build out external(?) Test Suite
+        -Abilities and Spells?
+        
+        
+    Milestone 4+:
+        -NPCs!
+            -Conversations and conversation trees
+            -Vendors
+            -Add Money
+        -Combat System
+            -Player needs stats
+            -Equipment
+            -Inventory needs quantity
+                -Refactor pickUpItem to have quantity handling

@@ -2,7 +2,7 @@
 //
 // Map should be: 
 //    [RedKeyRoom]   [Vault]   [BlueKeyRoom]
-//        ||           ||       git   || 
+//        ||           ||         || 
 //     [LHall]  =  [MHall]  =  [RHall]
 //                   ||
 //                 [Entry]
@@ -19,6 +19,13 @@
     var currentRoom = "Entry";
     console.log("Initialized currentRoom to " + currentRoom)
 //Loads Room List and sets Current Index
+
+var itemList = {
+    itemListformat: {itemId: "name", itemDesc: "itemDescription"},
+    redKey: {itemId: "Red Key", itemDesc: "An ornate Red Key, found in the Red Key Room. It is the same color as one of the Vault door locks in the Main Hall."},
+    blueKey:{itemId: "Blue Key", itemDesc: "An ornate Blue Key, found in the Blue Key Room. It is the same color as one of the Vault door locks in the Main Hall."},
+}
+
 var RoomList = [
     { //Entry
         id:"Entry",
@@ -117,27 +124,6 @@ var RoomList = [
     console.log("Room List loaded with " + RoomList.length + " rooms")
     findCurrentRoomIndex();
     console.log("CurrentRoom index set to " + foundRoomIndex);    
-
-var itemList = [
-    {//itemKeyFormat
-        id: "itemKeyFormat",
-        desc: "itemDescription"
-        },
-    { //Red Key
-        id:"Red Key",
-        desc: "An ornate Red Key, found in the Red Key Room. It is the same color as one of the Vault door locks in the Main Hall."
-        },
-    { //Blue Key
-        id:"Blue Key",
-        desc: "An ornate Blue Key, found in the Blue Key Room. It is the same color as one of the Vault door locks in the Main Hall."
-        },
-];
-
-var itemList2 = {
-    itemKeyformat: {itemId: "name", itemDesc: "itemDescription"},
-    redKey: {itemId: "Red Key", itemDesc: "An ornate Red Key, found in the Red Key Room. It is the same color as one of the Vault door locks in the Main Hall."},
-    blueKey:{itemId: "Blue Key", itemDesc: "An ornate Blue Key, found in the Blue Key Room. It is the same color as one of the Vault door locks in the Main Hall."},
-}
 
 function findCurrentRoomIndex(){//Find the index for the currentRoom
 for (var i=0; i < RoomList.length; i++){
@@ -387,61 +373,3 @@ function runTest(){
 runTest();
 
 
-/* RoadMap
-Milestone 1:
-    -Basic End-to-End of Dungeon Level 1
-    -Inventory
-    -Rooms
-    -Doors
-    -Locks
-    -Using Keys on Doors
-    -Picking Up Items
-
-Milestone 2:
--Get git going good    
--User Input + Core Game Loop (User Input --> Game Does a Thing --> Ask for New Input )
-        -Help Command (To teach you to play)
-    -Item Expansion!
-        -Add Item Directory
-            TODO: Decide on directory format.
-            TODO: Support itemID vs display name
-        -Inspect Items -> Read Description Out
-        -Teach Players About Teleporting!
-            -Add Item Descriptions
-    -Room Expansion
-        -Inspect current room -> Display description
-        -Flesh out room descriptions in RoomList
-    -Refactor: Use items that arent keys
-    -Dynamic Events (Events triggered on something happening)
-    -Dungeon Expansion 1 - The Ancient Temple!
-        -Tons more rooms! 
-            - Lots of keys of different forms 
-        -Secret doors.
-            -Modify descriptions depending on door being detected.
-        -Solve puzzles!
-            -Sphinx's Riddle
-            -Shrine of the Silver Monkey
-
-Milestone 3:
-    -Menu screen on load
-        -New Game, Load Game, Exit
-    -Add ability to Save game
-    -Add Game Over condition. --> Back to Menu
-    -Build out external(?) Test Suite
-    -Abilities and Spells?
-    
-    
-Milestone 4+:
-    -NPCs!
-        -Conversations and conversation trees
-        -Vendors
-        -Add Money
-    -Combat System
-        -Player needs stats
-        -Equipment
-        -Inventory needs quantity
-            -Refactor pickUpItem to have quantity handling
-
-Milestone 5!:
-    Win a BAFTA
-*/
