@@ -10,15 +10,16 @@ Changelog
 
     Milestone 2:
         -Ported project to github.    
-        -Decided on item directory format.
+        -Item Expansion!        
+            -Decided on item directory format.
+            -REFACTOR: Support itemID vs display name
+            -Add Item Directory Object (support all current items?)
 
 TODO
     -User Input + Core Game Loop (User Input --> Game Does a Thing --> Ask for New Input )
         -Translation layer from input --> game terms    
         -Help Command (To teach you to play)
     -Item Expansion!
-        REFACTOR: Support itemID vs display name
-        -Add Item Directory (support all current items?)
         -Inspect Items -> Read Description Out
         -Teach Players About Teleporting!
             -Add Item Descriptions

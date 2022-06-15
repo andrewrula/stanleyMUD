@@ -1,29 +1,19 @@
-//Description of Game
-//
-// Map should be: 
-//    [RedKeyRoom]   [Vault]   [BlueKeyRoom]
-//        ||           ||         || 
-//     [LHall]  =  [MHall]  =  [RHall]
-//                   ||
-//                 [Entry]
-//
-// In RedKeyRoom there is a Red Key.
-// In BlueKeyRoom there is a Blue Key.
-// In MHall there is a North-facing door. It needs both red and blue keys to open.
-// In Vault is the Treasure.
-
 //Initializing currentRoom to Entry and calling vars
     console.log ("I am a startup message!")
+    //Inventory is an array with the form [itemKey, itemKey, itemKey]
     var inventory = [];
     var foundRoomIndex;
     var currentRoom = "Entry";
     console.log("Initialized currentRoom to " + currentRoom)
-//Loads Room List and sets Current Index
 
+//Loads Room List and sets Current Index
 var itemList = {
-    itemListformat: {itemId: "name", itemDesc: "itemDescription"},
-    redKey: {itemId: "Red Key", itemDesc: "An ornate Red Key, found in the Red Key Room. It is the same color as one of the Vault door locks in the Main Hall."},
-    blueKey:{itemId: "Blue Key", itemDesc: "An ornate Blue Key, found in the Blue Key Room. It is the same color as one of the Vault door locks in the Main Hall."},
+    itemListformat: {itemID: "name", itemDesc: "itemDescription"},
+    redKey: {itemID: "Red Key", itemDesc: "An ornate Red Key, found in the Red Key Room. It is the same color as one of the Vault door locks in the Main Hall."},
+    blueKey:{itemID: "Blue Key", itemDesc: "An ornate Blue Key, found in the Blue Key Room. It is the same color as one of the Vault door locks in the Main Hall."},
+    vaultMap: {itemID: "Vault Map", itemDesc: "A map of the Vault that you're in. Maybe if you inspected it you could learn more?"},
+    pileofjewels: {itemID: "Some Jewels", itemDesc: "Simply, a scattered selection of scintillating spinels, six sapphires, some shiny stones. Sellable."},
+    jewelryStone: {itemID: "Bejeweled Stone", itemDesc: "A stone cut as if it was a gemstone, with smooth facets on all sides. A princess cut, perhaps?"},
 }
 
 var RoomList = [
@@ -46,7 +36,7 @@ var RoomList = [
             [
                 {exit:"North",
                 to:"Vault",
-                lock:[true,"Red Key","Blue Key"]}
+                lock:[true, "redKey" ,"blueKey"]}
             ],
             [
                 {exit:"South",
@@ -97,7 +87,7 @@ var RoomList = [
                   ]
                 ],
             desc: "A beautiful temple. On the altar, a Red Key is displayed.",
-            contents:["Some Jewels", "Red Key","A Map"]
+            contents:["pileofjewels", "redKey", "vaultMap"]
         },
     { //BlueKeyRoom
         id:"BlueKeyRoom",
@@ -108,7 +98,7 @@ var RoomList = [
               ]
             ],
         desc: "A beautiful temple. On the altar, a Blue Key is displayed.",
-        contents:["Blue Key"]
+        contents:["blueKey"]
         },
     { //Vault
         id:"Vault",
@@ -133,6 +123,23 @@ for (var i=0; i < RoomList.length; i++){
  }
  console.log ("Found room at index " + foundRoomIndex)  
 }
+
+function lookUpDisplayName(itemKey){
+    console.log (itemList[itemKey].itemID)
+    return itemList[itemKey].itemID;
+};
+
+function lookUpItemID(displayName){
+    console.log("looking for " + displayName)   
+    for (const key in itemList){
+        console.log("key is " + key);
+        if(itemList[key].itemID == displayName){
+            console.log("Returning " + key)
+            return key;
+        }
+    } console.log("Returning False")
+    return false;
+};
 
 function movePlayer(direction){//Moves Player in the noted direction
 console.log("Moving player " + direction + " from " + currentRoom)
@@ -180,42 +187,53 @@ function tpPlayer(room){//Teleports player to target room.
     console.log ("Player has reappeared in " + currentRoom)
 }
 
-function pickUpItem(item){
-//TODO: Refactor this to use the some() array method.
-    var exists = 0
-    var tryingToPickUp = item 
-    function ifExistsAddExists(target){
-        if(target === tryingToPickUp){
-            exists += 1;
-            return;
+function itemPickUp(plainTextItemName){
+    //User types in name of item in plaintext
+    //Convert the displayname to ID
+        var itemID = lookUpItemID(plainTextItemName);
+        console.log(itemID + " is itemID")
+    //Test failure conditions
+    //  -Does room have contents
+        if(RoomList[foundRoomIndex].contents === undefined){
+            console.log("This room has no contents.")
+            return false;
         }else{
-            return;
-        }
-    }
-
-    if(RoomList[foundRoomIndex].contents === undefined){
-        console.log("That item does not exist here")
-        return;
-    }else{
-    RoomList[foundRoomIndex].contents.forEach(ifExistsAddExists);
-        if(exists > 0){
-            inventory.push(tryingToPickUp);
-            console.log("Added " + tryingToPickUp + " to Inventory")
-            for(i=0; i<RoomList[foundRoomIndex].contents.length;i++){
-                console.log("Looking for " + tryingToPickUp + " in " + RoomList[foundRoomIndex].contents[i] + " with i of " + i);
-                if(tryingToPickUp == RoomList[foundRoomIndex].contents[i]){
-                    RoomList[foundRoomIndex].contents.splice(i,1);
-                    console.log("Removed " + tryingToPickUp + "from " + currentRoom);
-                    console.log("Remaining in Room: " + RoomList[foundRoomIndex].contents)
-                    return;
+            console.log("Room has contents")
+        };
+    //  -Is itemID in those contents
+        var index
+        function roomHasItemAsProperty(){
+            console.log(itemID);
+            console.log(RoomList[foundRoomIndex].contents);
+            for(var i in RoomList[foundRoomIndex].contents){
+                console.log("i is " + i)
+                console.log(RoomList[foundRoomIndex].contents[i]);
+                if(RoomList[foundRoomIndex].contents[i] == itemID){
+                    index = i;
+                    return true;
                 }
             }
-        }else{console.log("That item does not exist here.")
+            return false;
+        }   
+        if(roomHasItemAsProperty()==true){
+            console.log("Item Found In Room");
+            inventory.push(itemID);
+            console.log(itemID + " added to Inventory, which now contains")
+            console.log(inventory);
+            RoomList[foundRoomIndex].contents.splice(index,1)
+            console.log ("Removed " + itemID + " from room. Remaining contents are:")
+            console.log(RoomList[foundRoomIndex].contents)
+            //TODO: Refactor this to permit quantity
+        }else{
+            console.log("Item does not exist in Room.")
+            return false; 
+        //  -Is locked? <future function goes here probably
+    //Remove itemID from room contents
     }
-}
 }
 
 function useKey(keyName, direction){
+    //Refactor: Make this a more generic function
     //Init Vars
     var foundDirectionIndex
     var foundKeyIndex
@@ -334,11 +352,14 @@ function useKey(keyName, direction){
     lockCheck();
 };
 
+
+//TEST SUITE
 function runTest(){
     movePlayer("North");
-    pickUpItem("Blork")
+    itemPickUp("Blork")
     movePlayer("West");
     movePlayer("North");
+    itemPickUp("Red Key");
     movePlayer("South");
     movePlayer("East");
     movePlayer("East");
@@ -352,24 +373,45 @@ function runTest(){
     movePlayer("North");
     movePlayer("West");
     movePlayer("North");
-    pickUpItem("A Map")
-    pickUpItem("Red Key");
-    pickUpItem("Red Key");
-    console.log("Inventory: " + inventory)
+    lookUpItemID("Vault Map");
+    itemPickUp(lookUpItemID("Vault Map"));
+    console.log("Inventory: " + inventory);
     movePlayer("South");
     movePlayer("East");
-    useKey("Red Key", "North")
+    useKey("redKey", "North")
     movePlayer("East");
     movePlayer("North");
-    pickUpItem("Blue Key");
+    itemPickUp("Blue Key");
     movePlayer("South");
     movePlayer("West");
-    useKey("Blue Key", "North")
+    useKey("blueKey", "North")
     movePlayer("North")
     console.log("Inventory: " + inventory);
 };
 
+function itemTest(){
+    lookUpDisplayName("redKey");
+    var displayNameLookupTest = lookUpDisplayName("redKey");
+    console.log ("displayNameLookupTest outputs: " + displayNameLookupTest + ". Expected 'Red Key'");
+    var idLookupTest = null
+    idLookupTest = lookUpItemID("Red Key");
+    console.log(idLookupTest);
+    console.log("idLookUpTest outputs:" + idLookupTest + " Expected: 'itemList.redKey'")
+    console.log("Inventory Check Next")
+    console.log(inventory);
+
+    };
+
+function newItemTest(){
+    movePlayer("North")
+    movePlayer("West")
+    movePlayer("North")
+    itemPickUp("Red Key")
+    itemPickUp("Florb")
+    itemPickUp("Red Key")
+    itemPickUp("Blue Key")
+    };
 
 runTest();
-
-
+//itemTest();
+//newItemTest()
