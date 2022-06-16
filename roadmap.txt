@@ -14,15 +14,19 @@ Changelog
             -Decided on item directory format.
             -REFACTOR: Support itemID vs display name
             -Add Item Directory Object (support all current items?)
+            -Add "readContents" property to items
+                -Add Spellbook Item Description
 
 TODO
     -User Input + Core Game Loop (User Input --> Game Does a Thing --> Ask for New Input )
         -Translation layer from input --> game terms    
-        -Help Command (To teach you to play)
+        -Write Help Command (To teach you to play)
     -Item Expansion!
         -Inspect Items -> Read Description Out
         -Teach Players About Teleporting!
-            -Add Item Descriptions
+
+
+
     -Room Expansion
         -TECH DEBT: Refactor roomList to use better format
         -Inspect current room -> Display description
@@ -57,3 +61,11 @@ TODO
             -Equipment
             -Inventory needs quantity
                 -Refactor pickUpItem to have quantity handling
+
+
+
+
+//Game Engine Notes
+//get node package manager
+//aka npm
+//prompt-sync

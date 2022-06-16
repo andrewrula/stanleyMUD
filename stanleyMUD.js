@@ -8,12 +8,13 @@
 
 //Loads Room List and sets Current Index
 var itemList = {
-    itemListformat: {itemID: "name", itemDesc: "itemDescription"},
-    redKey: {itemID: "Red Key", itemDesc: "An ornate Red Key, found in the Red Key Room. It is the same color as one of the Vault door locks in the Main Hall."},
-    blueKey:{itemID: "Blue Key", itemDesc: "An ornate Blue Key, found in the Blue Key Room. It is the same color as one of the Vault door locks in the Main Hall."},
-    vaultMap: {itemID: "Vault Map", itemDesc: "A map of the Vault that you're in. Maybe if you inspected it you could learn more?"},
-    pileofjewels: {itemID: "Some Jewels", itemDesc: "Simply, a scattered selection of scintillating spinels, six sapphires, some shiny stones. Sellable."},
-    jewelryStone: {itemID: "Bejeweled Stone", itemDesc: "A stone cut as if it was a gemstone, with smooth facets on all sides. A princess cut, perhaps?"},
+    itemListformat: {itemID: "name", type:"example", itemDesc: "Inspect to find this", readContents:"Read the item to see this"},
+    redKey: {itemID: "Red Key", type: "key", itemDesc: "An ornate Red Key, found in the Red Key Room. It is the same color as one of the Vault door locks in the Main Hall."},
+    blueKey:{itemID: "Blue Key", type: "key", itemDesc: "An ornate Blue Key, found in the Blue Key Room. It is the same color as one of the Vault door locks in the Main Hall."},
+    vaultMap: {itemID: "Vault Map", type: "book", itemDesc: "A map of the Vault that you're in. Maybe if you Read it you could learn more?", readContents: "The map is crude, to say the least. In fact, there are only two locations noted. The Vault, which is where you are, and the Arcane Temple. There isn't even a scale to the map. How's that supposed to help?"},
+    pileofjewels: {itemID: "Some Jewels", type: "loot", itemDesc: "Simply, a scattered selection of scintillating spinels, six sapphires, some shiny stones. Sellable."},
+    jewelryStone: {itemID: "Bejeweled Stone",type: "loot", itemDesc: "A stone cut as if it was a gemstone, with smooth facets on all sides. A princess cut, perhaps?"},
+    spellbookBasic:{itemID: "Basic Spellbook",type: "book", itemDesc: "A spellbook you found amidst the treasure. Its pages are covered in arcane diagrams. Meant for reading.", readContents: "A simple spellbook, bound in purple and navy. It's cover resembles a starfield. Within, you learn the secrets to shifting the world beneath your feet. By merely commanding oneself to |Teleport|, you could arrive at any room you can name. (ie: 'Teleport Vault') There is also a lot of other text warning about mutations in the fundamental state of reality, but none of that seems nearly as interesting as teleportation!"},
 }
 
 var RoomList = [
@@ -233,7 +234,7 @@ function itemPickUp(plainTextItemName){
 }
 
 function useKey(keyName, direction){
-    //Refactor: Make this a more generic function
+    //TODO: Refactor: Make this a more generic function
     //Init Vars
     var foundDirectionIndex
     var foundKeyIndex
@@ -352,6 +353,24 @@ function useKey(keyName, direction){
     lockCheck();
 };
 
+function inspectItem(plainTextItemName){
+    //TODO Allow a lock to be applied to the inventory item - like a locked box or scroll case or something. Maybe even MAGIC LOCKS!~ 
+    var itemID = lookUpItemID(plainTextItemName);
+        console.log(itemID + " is itemID")
+    //Do you have the item?
+    for (var i in inventory){
+        if(itemID == inventory[i]){
+            //print description of itemname
+            console.log(itemList[itemID].itemDesc)
+            return; 
+        }
+    }   console.log ("Item Not Found in Inventory");
+        return false;
+
+    }
+        
+
+
 
 //TEST SUITE
 function runTest(){
@@ -360,6 +379,9 @@ function runTest(){
     movePlayer("West");
     movePlayer("North");
     itemPickUp("Red Key");
+    itemPickUp("Vault Map");
+    console.log("DEBUG RED KEY INSPECT")
+    inspectItem("Red Key")
     movePlayer("South");
     movePlayer("East");
     movePlayer("East");
@@ -387,6 +409,8 @@ function runTest(){
     useKey("blueKey", "North")
     movePlayer("North")
     console.log("Inventory: " + inventory);
+    inspectItem("Vault Map");
+    inspectItem("BIG SUPER FAKE ITEM");
 };
 
 function itemTest(){
@@ -415,3 +439,7 @@ function newItemTest(){
 runTest();
 //itemTest();
 //newItemTest()
+
+
+
+
