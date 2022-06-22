@@ -112,6 +112,31 @@ var RoomList = [
         desc: "A vault with limitless gold. You're rich! Now you can retire from playing poorly beta'd games!"
         },
 ]
+
+var newRoomList = {
+    roomListFormat:{
+        roomID: "name",
+        roomDisplayName: "Plain Text Room Name",
+        roomDesc: "descriptive text for room",
+        contents: ["itemID", "itemID", "itemID"],
+        doors:{direction1: ["destinationRoomID", "lockBoolean", "lockKey1", "lockKey2","..." ], direction2:"destinationRoomID"}
+    },
+    entry:{
+        roomID: "entry",
+        roomDisplayName: "Vault Entrance",
+        roomDesc: "A moody entranceway. There is a door leading North, and the Vault Exit is to your South.",
+        contents: [],
+        doors: {north: ["MHall", false], south: ["vaultExterior", false]},
+    },
+    mHall:{
+        roomID: "mHall",
+        roomDisplayName: "Great Hall",
+        roomDesc: "The Great Hall of the ruin is big. Like dwarf-built big. You've seen Lord of the Rings, right? There are exits to all four cardinal directions. To the north is the Vault Door. It has two keyholes, one red and one blue. To the east and west are hallways. To the South is the Entryway.",
+        contents: [],
+        doors:{north: ["vault", true, "redKey", "blueKey"], south:["entry",false]},
+    },
+}
+    
     console.log("Room List loaded with " + RoomList.length + " rooms")
     findCurrentRoomIndex();
     console.log("CurrentRoom index set to " + foundRoomIndex);    
@@ -436,7 +461,8 @@ function newItemTest(){
     itemPickUp("Blue Key")
     };
 
-runTest();
+//runTest();
+console.log("North Door is " + newRoomList.mHall.doors.north.length);
 //itemTest();
 //newItemTest()
 
