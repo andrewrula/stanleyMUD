@@ -5,12 +5,12 @@ var currentRoom = "entry"; //currentRoom is a simple value that contains the roo
     console.log("Initialized currentRoom to " + currentRoom)
 var itemList = {//Provides a list of items and their associated properties
     itemListformat: {itemID: "name", type:"example", itemDesc: "Inspect to find this", readContents:"Read the item to see this"},
-    redKey: {itemID: "Red Key", type: "key", itemDesc: "An ornate Red Key, found in the Red Key Room. It is the same color as one of the Vault door locks in the Main Hall."},
-    blueKey:{itemID: "Blue Key", type: "key", itemDesc: "An ornate Blue Key, found in the Blue Key Room. It is the same color as one of the Vault door locks in the Main Hall."},
-    vaultMap: {itemID: "Vault Map", type: "book", itemDesc: "A map of the Vault that you're in. Maybe if you Read it you could learn more?", readContents: "The map is crude, to say the least. In fact, there are only two locations noted. The Vault, which is where you are, and the Arcane Temple. There isn't even a scale to the map. How's that supposed to help?"},
+    redkey: {itemID: "Red Key", type: "key", itemDesc: "An ornate Red Key, found in the Red Key Room. It is the same color as one of the Vault door locks in the Main Hall."},
+    bluekey:{itemID: "Blue Key", type: "key", itemDesc: "An ornate Blue Key, found in the Blue Key Room. It is the same color as one of the Vault door locks in the Main Hall."},
+    vaultmap: {itemID: "Vault Map", type: "book", itemDesc: "A map of the Vault that you're in. Maybe if you Read it you could learn more?", readContents: "The map is crude, to say the least. In fact, there are only two locations noted. The Vault, which is where you are, and the Arcane Temple. There isn't even a scale to the map. How's that supposed to help?"},
     pileofjewels: {itemID: "Some Jewels", type: "loot", itemDesc: "Simply, a scattered selection of scintillating spinels, six sapphires, some shiny stones. Sellable."},
-    jewelryStone: {itemID: "Bejeweled Stone",type: "loot", itemDesc: "A stone cut as if it was a gemstone, with smooth facets on all sides. A princess cut, perhaps?"},
-    spellbookBasic:{itemID: "Basic Spellbook",type: "book", itemDesc: "A spellbook you found amidst the treasure. Its pages are covered in arcane diagrams. Meant for reading.", readContents: "A simple spellbook, bound in purple and navy. It's cover resembles a starfield. Within, you learn the secrets to shifting the world beneath your feet. By merely commanding oneself to |Teleport|, you could arrive at any room you can name. (ie: 'Teleport Vault') There is also a lot of other text warning about mutations in the fundamental state of reality, but none of that seems nearly as interesting as teleportation!"},
+    jewelrystone: {itemID: "Bejeweled Stone",type: "loot", itemDesc: "A stone cut as if it was a gemstone, with smooth facets on all sides. A princess cut, perhaps?"},
+    spellbookbasic:{itemID: "Basic Spellbook",type: "book", itemDesc: "A spellbook you found amidst the treasure. Its pages are covered in arcane diagrams. Meant for reading.", readContents: "A simple spellbook, bound in purple and navy. It's cover resembles a starfield. Within, you learn the secrets to shifting the world beneath your feet. By merely commanding oneself to |Teleport|, you could arrive at any room you can name. (ie: 'Teleport Vault') There is also a lot of other text warning about mutations in the fundamental state of reality, but none of that seems nearly as interesting as teleportation!"},
 };
     console.log("Item List loaded with " + Object.keys(itemList).length + " items.")
 var roomList = {
@@ -26,49 +26,49 @@ var roomList = {
         roomDisplayName: "Vault Entrance",
         roomDesc: "A moody entranceway. There is a door leading North, and the Vault Exit is to your South.",
         contents: [],
-        doors: {north: ["mHall", false], south: ["vaultExterior", false]},
+        doors: {north: ["mhall", false], south: ["vaultExterior", false]},
     },
-    mHall:{
-        roomID: "mHall",
+    mhall:{
+        roomID: "mhall",
         roomDisplayName: "Great Hall",
         roomDesc: "The Great Hall of the ruin is big. Like dwarf-built big. You've seen Lord of the Rings, right? There are exits to all four cardinal directions. To the north is the Vault Door. It has two keyholes, one red and one blue. To the east and west are hallways. To the South is the Entryway.",
         contents: [],
-        doors:{north:["vault", true, "redKey", "blueKey"],south:["entry",false], east:["rHall", false], west:["lHall", false]},
+        doors:{north:["vault", true, "redkey", "bluekey"],south:["entry",false], east:["rhall", false], west:["lhall", false]},
     },
     vault:{
         roomID: "name",
         roomDisplayName: "Vault of Wonders",
         roomDesc: "A vault with limitless gold. You're rich! Now you can retire from playing poorly beta'd games!",
         contents: ["oldKey", "basicSpellbook", "Gold"],
-        doors:{south: ["mHall",false]}
+        doors:{south: ["mhall",false]}
     },
-    rHall:{
-        roomID: "rHall",
+    rhall:{
+        roomID: "rhall",
         roomDisplayName: "Right Hall",
         roomDesc: "A nondescript hallway. There's a door to the north, and to the west is the path back to the Gain Hall.",
         contents: [],
-        doors:{north: ["blueKeyRoom", false], west:["mHall",false]}
+        doors:{north: ["bluekeyroom", false], west:["mhall",false]}
     },
-    lHall:{
-        roomID: "lHall",
+    lhall:{
+        roomID: "lhall",
         roomDisplayName: "Left Hall",
         roomDesc: "A nondescript hallway. There's a door to the north, and to the east is the path back to the Main Hall.",
         contents: [],
-        doors:{north: ["redKeyRoom", false], east:["mHall",false]}
+        doors:{north: ["redkeyroom", false], east:["mhall",false]}
     },
-    redKeyRoom:{
-        roomID: "redKeyRoom",
+    redkeyroom:{
+        roomID: "redkeyroom",
         roomDisplayName: "Red Key Room",
         roomDesc: "A beautiful shrine to a forgotten diety. On the altar, a Red Key is displayed.",
-        contents: ["pileofjewels", "redKey", "vaultMap"],
-        doors:{south: ["lHall", false]}
+        contents: ["pileofjewels", "redkey", "vaultmap"],
+        doors:{south: ["lhall", false]}
     },
-    blueKeyRoom:{
-        roomID: "blueKeyRoom",
+    bluekeyroom:{
+        roomID: "bluekeyroom",
         roomDisplayName: "Blue Key Room",
         roomDesc: "A beautiful shrine to an unknown god. On the altar, a Blue Key is displayed.",
-        contents: ["blueKey"],
-        doors:{south: ["rHall", false]}
+        contents: ["bluekey"],
+        doors:{south: ["rhall", false]}
     }
 };    
     console.log("Room List loaded with " + Object.keys(roomList).length + " rooms.")
@@ -80,10 +80,11 @@ function lookUpDisplayName(itemKey){//Looks up the display name of an itemKey
     return itemList[itemKey].itemID;
 };
 function lookUpItemID(displayName){//Looks up the itemID of a display name
+    //BROKEN DUE TO NEW ITEM LIST.
     console.log("looking for " + displayName)   
-    for (const key in itemList){
-        console.log("key is " + key);
-        if(itemList[key].itemID == displayName){
+    for (const i in itemList){
+        console.log("key is " + i);
+        if(itemList[i].itemID == displayName){
             console.log("Returning " + key)
             return key;
         }
@@ -262,6 +263,25 @@ function inspectItem(plainTextItemName){
         return false;
 
 };
+function readItem(plainTextItemName){
+    //TODO Allow a lock to be applied to the inventory item - like a locked box or scroll case or something. Maybe even MAGIC LOCKS!~ 
+    var itemID = lookUpItemID(plainTextItemName);
+        console.log(itemID + " is itemID")
+    if(itemList[itemID].hasOwnProperty(readContents)===false){
+        //NOT CURRENTLY WORKING DUE TO BROKEN lookUpItemID()
+        console.log("That item can not be read")
+        return;
+    }
+        //Do you have the item?
+    for (var i in inventory){
+        if(itemID == inventory[i]){
+            //print readContents of itemID
+            console.log(itemList[itemID].readContents)
+            return; 
+        }
+    }   console.log ("Item Not Found in Inventory");
+        return false;
+};
 
 //MOVEMENT RELATED
 function movePlayer(direction){//Moves Player in the noted direction
@@ -298,6 +318,7 @@ getLocationDescription(currentRoom);
 };
 function tpPlayer(room){//Teleports player to target room.
     //TODO: Add teleport safety rails for incorrect room name.
+    //TODO: Add support for roomDisplayName in both inputs and outputs.
     console.log("Player casts a teleportation spell in " + currentRoom)
     currentRoom = room;
     console.log ("Player has reappeared in " + currentRoom)
@@ -306,26 +327,64 @@ function getLocationDescription(location){
     console.log(roomList[location].roomDesc)
 };
 
-//COMMANDER
-//Commander acts as the routing and translating function within stanleyMUD. It is the primary translation service. It is responsible for turning a player input into a well formed command to the LIEUTENANT service. 
-function commander(command){
+//LIEUTENANT
+//Lieutenant is the service that is responsible for carrying out Commander's orders. It takes a command and determines if additional information is necessary.
     // Help
-    if(command == "Help"||command == "Help Me"||command == "Tutorial"||command == "I'm Stuck"){
-        printHelp()
-    }
     // Initialize
     // Admin
-    // Move
+    // Move (ie: Go) [x]
     // Pick Up
     // Use
     // Read
-    // Teleport
+    // Teleport      [x]
     // Credits
-
+    //Talk (ie: Approach)
+    // Profane
+function lieutenant(verb, noun){
+    if (verb == "move"||verb == "go"){
+        movePlayer(noun);
+    }
+    else if( verb == "teleport"){
+        tpPlayer(noun);
+    }
+    else if (verb == "read"){
+        readItem(noun);
+    }
 }
 
-//LIEUTENANT
-//Lieutenant is the service that is responsible for carrying out Commander's orders. It takes a command and determines if additional information is necessary.
+//COMMANDER
+//Commander acts as the routing and translating function within stanleyMUD. It is the primary translation service. It is responsible for turning a player input into a well formed command to the LIEUTENANT service.
+function commander(command){
+    //Sanitize input. remove caps.
+    verb = command.split(" ")[0].toLowerCase();
+    //console.log(command.split(" ").length)
+    
+    //If command is only one word, that word is a verb and we should return a blank string as the noun
+    if(command.split(" ").length == 1){
+        noun = ""
+    }
+    //If command is exactly two words, the second word (index 1) is a noun and we return it. 
+    else if (command.split(" ").length == 2){
+        noun = command.split(" ")[1]
+    }
+    //Otherwise we need to combine the remaining words into a single key.
+    else {
+        noun = command.split(" ");
+        //console.log (noun);
+        noun = noun.splice(1,noun.length);
+        //console.log(noun);
+        noun = noun.join("");
+    }
+    //console.log(verb);
+    //console.log(noun);
+    lieutenant(verb, noun);
+
+
+    //Possible flow for multi-word verbs?
+    //ID first verb. If it clicks, set rest for noun.
+    //If not add another word to verb
+};
+
 
 
 //TEST SUITE
@@ -355,26 +414,26 @@ function runTest(){
     console.log("Inventory: " + inventory);
     movePlayer("south");
     movePlayer("east");
-    useKey("redKey", "north")
+    useKey("redkey", "north")
     movePlayer("east");
     movePlayer("north");
     itemPickUp("Blue Key");
     movePlayer("south");
     movePlayer("west");
-    useKey("blueKey", "north")
+    useKey("bluekey", "north")
     movePlayer("north")
     console.log("Inventory: " + inventory);
     inspectItem("Vault Map");
     inspectItem("BIG SUPER FAKE ITEM");
 };
 function itemTest(){
-    lookUpDisplayName("redKey");
-    var displayNameLookupTest = lookUpDisplayName("redKey");
+    lookUpDisplayName("redkey");
+    var displayNameLookupTest = lookUpDisplayName("redkey");
     console.log ("displayNameLookupTest outputs: " + displayNameLookupTest + ". Expected 'Red Key'");
     var idLookupTest = null
     idLookupTest = lookUpItemID("Red Key");
     console.log(idLookupTest);
-    console.log("idLookUpTest outputs:" + idLookupTest + " Expected: 'redKey'")
+    console.log("idLookUpTest outputs:" + idLookupTest + " Expected: 'redkey'")
     console.log("Inventory Check Next")
     console.log(inventory);
 };
@@ -387,7 +446,20 @@ function newItemTest(){
     itemPickUp("Red Key")
     itemPickUp("Blue Key")
 };
+function commanderTests(){
+    console.log("Test 1: Basic parsing of verb. Expected 'move' then 'north'")
+    commander("Move North");
+    commander("Go West");
+    console.log("Test 2: Advanced noun parsing. Expected teleport to redkeyroom")
+    commander("Teleport Red Key Room")
+    inventory = ["basicspellbook"]
+    commander ("Read spellbookbasic");
+        //Failing due to improper name being fed to lookUpItemID()
+        //Homogenize the way that item and room names are handled. Use display names and convert to ID in the respective function!
 
-runTest();
+};
+
+//runTest();
 //itemTest();
 //newItemTest()
+commanderTests();
