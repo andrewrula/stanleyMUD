@@ -291,10 +291,10 @@ if(roomList[currentRoom].doors[direction][1] === false){
 //Set currentRoom to the destination.
 currentRoom = roomList[currentRoom].doors[direction][0]
 console.log ("currentRoom has been changed to " + currentRoom)
+getLocationDescription(currentRoom);
 
 //Prints description of new currentRoom
-//console.log (roomList[currentRoom])
-console.log(roomList[currentRoom].roomDesc)
+
 };
 function tpPlayer(room){//Teleports player to target room.
     //TODO: Add teleport safety rails for incorrect room name.
@@ -302,6 +302,31 @@ function tpPlayer(room){//Teleports player to target room.
     currentRoom = room;
     console.log ("Player has reappeared in " + currentRoom)
 };
+function getLocationDescription(location){
+    console.log(roomList[location].roomDesc)
+};
+
+//COMMANDER
+//Commander acts as the routing and translating function within stanleyMUD. It is the primary translation service. It is responsible for turning a player input into a well formed command to the LIEUTENANT service. 
+function commander(command){
+    // Help
+    if(command == "Help"||command == "Help Me"||command == "Tutorial"||command == "I'm Stuck"){
+        printHelp()
+    }
+    // Initialize
+    // Admin
+    // Move
+    // Pick Up
+    // Use
+    // Read
+    // Teleport
+    // Credits
+
+}
+
+//LIEUTENANT
+//Lieutenant is the service that is responsible for carrying out Commander's orders. It takes a command and determines if additional information is necessary.
+
 
 //TEST SUITE
 function runTest(){
@@ -311,7 +336,6 @@ function runTest(){
     movePlayer("north");
     itemPickUp("Red Key");
     itemPickUp("Vault Map");
-    console.log("DEBUG RED KEY INSPECT")
     inspectItem("Red Key")
     movePlayer("south");
     movePlayer("east");
@@ -364,8 +388,6 @@ function newItemTest(){
     itemPickUp("Blue Key")
 };
 
-
-
-//runTest();
+runTest();
 //itemTest();
 //newItemTest()
