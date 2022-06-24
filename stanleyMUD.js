@@ -76,28 +76,31 @@ var roomList = {
 
 //ITEM RELATED
 function lookUpDisplayName(itemKey){//Looks up the display name of an itemKey
-    console.log (itemList[itemKey].itemID)
+    //console.log (itemList[itemKey].itemID)
     return itemList[itemKey].itemID;
 };
 function lookUpItemID(displayName){//Looks up the itemID of a display name
     //BROKEN DUE TO NEW ITEM LIST.
     console.log("looking for " + displayName)   
     for (const i in itemList){
-        console.log("key is " + i);
+        //console.log("key is " + i);
         if(itemList[i].itemID == displayName){
-            console.log("Returning " + key)
-            return key;
+            console.log("Returning " + i)
+            return i;
         }
-    } console.log("Returning False")
+    } console.log("That's not a real item.")
     return false;
 };
 function itemPickUp(plainTextItemName){
     //User types in name of item in plaintext
     //Convert the displayname to ID
-        var itemID = lookUpItemID(plainTextItemName);
-        console.log(itemID + " is itemID")
+        var itemID = lookUpItemID(plainTextItemName); 
     //Test failure conditions
     //  -Does room have contents
+        if(itemID == false){
+            console.log("Item Lookup Failed");
+            return
+        }
         if(roomList[currentRoom].contents === []){
             console.log("This room has no contents.")
             return false;
@@ -124,6 +127,7 @@ function itemPickUp(plainTextItemName){
             inventory.push(itemID);
             console.log(itemID + " added to Inventory, which now contains")
             console.log(inventory);
+            //Remove itemID from room contents
             roomList[currentRoom].contents.splice(index,1)
             console.log ("Removed " + itemID + " from room. Remaining contents are:")
             console.log(roomList[currentRoom].contents)
@@ -132,7 +136,7 @@ function itemPickUp(plainTextItemName){
             console.log("Item does not exist in Room.")
             return false; 
         //  -Is locked? <future function goes here probably
-    //Remove itemID from room contents
+    
     }
 };
 function useKey(keyName, direction){
@@ -266,9 +270,13 @@ function inspectItem(plainTextItemName){
 function readItem(plainTextItemName){
     //TODO Allow a lock to be applied to the inventory item - like a locked box or scroll case or something. Maybe even MAGIC LOCKS!~ 
     var itemID = lookUpItemID(plainTextItemName);
-        console.log(itemID + " is itemID")
-    if(itemList[itemID].hasOwnProperty(readContents)===false){
-        //NOT CURRENTLY WORKING DUE TO BROKEN lookUpItemID()
+        //console.log(itemID + " is itemID")
+        //console.log(itemList[itemID])
+    if(typeof itemList[itemID] == "undefined"){
+        console.log("That's not a real item");
+        return;
+    }
+    if(itemList[itemID].hasOwnProperty("readContents")===false){
         console.log("That item can not be read")
         return;
     }
@@ -285,9 +293,7 @@ function readItem(plainTextItemName){
 
 //MOVEMENT RELATED
 function movePlayer(direction){//Moves Player in the noted direction
-console.log("Moving player " + direction + " from " + currentRoom)
-//console.log("DEBUG")
-//console.log(roomList[currentRoom]);
+    console.log("Moving player " + direction + " from " + currentRoom)
 //Fails out if direction not found.
     if (roomList[currentRoom].doors.hasOwnProperty(direction)===false){
         console.log("You can not go that direction.");
@@ -295,12 +301,6 @@ console.log("Moving player " + direction + " from " + currentRoom)
 }
 
 //Locked door check
-//console.log("DEBUG")
-//console.log(direction)
-//console.log(currentRoom)
-//console.log(roomList[currentRoom])
-//console.log(roomList[currentRoom].doors)
-//console.log(roomList[currentRoom].doors[direction])
 if(roomList[currentRoom].doors[direction][1] === false){
         console.log("No lock detected! Move accepted.");
     }else if(roomList[currentRoom].doors[direction][1] === true){
@@ -342,6 +342,7 @@ function getLocationDescription(location){
     // Profane
 function lieutenant(verb, noun){
     if (verb == "move"||verb == "go"){
+        noun = noun.toLowerCase();
         movePlayer(noun);
     }
     else if( verb == "teleport"){
@@ -372,8 +373,10 @@ function commander(command){
         noun = command.split(" ");
         //console.log (noun);
         noun = noun.splice(1,noun.length);
-        //console.log(noun);
-        noun = noun.join("");
+        for (var i in noun){
+            noun[i].split();
+        }
+        noun = noun.join(" ");
     }
     //console.log(verb);
     //console.log(noun);
@@ -427,20 +430,15 @@ function runTest(){
     inspectItem("BIG SUPER FAKE ITEM");
 };
 function itemTest(){
-    lookUpDisplayName("redkey");
     var displayNameLookupTest = lookUpDisplayName("redkey");
     console.log ("displayNameLookupTest outputs: " + displayNameLookupTest + ". Expected 'Red Key'");
-    var idLookupTest = null
-    idLookupTest = lookUpItemID("Red Key");
-    console.log(idLookupTest);
-    console.log("idLookUpTest outputs:" + idLookupTest + " Expected: 'redkey'")
-    console.log("Inventory Check Next")
-    console.log(inventory);
+    var idLookupTest = lookUpItemID("Red Key");
+    console.log("idLookUpTest outputs: " + idLookupTest + " Expected: 'redkey'")
 };
 function newItemTest(){
-    movePlayer("North")
-    movePlayer("West")
-    movePlayer("North")
+    movePlayer("north")
+    movePlayer("west")
+    movePlayer("north")
     itemPickUp("Red Key")
     itemPickUp("Florb")
     itemPickUp("Red Key")
@@ -452,14 +450,15 @@ function commanderTests(){
     commander("Go West");
     console.log("Test 2: Advanced noun parsing. Expected teleport to redkeyroom")
     commander("Teleport Red Key Room")
-    inventory = ["basicspellbook"]
-    commander ("Read spellbookbasic");
-        //Failing due to improper name being fed to lookUpItemID()
-        //Homogenize the way that item and room names are handled. Use display names and convert to ID in the respective function!
+    inventory = ["spellbookbasic"]
+    commander ("Read Basic Spellbook");
+    commander ("Read BIG FAKE BOOK")
+        //TODO: Refactor roomName to use similar nomenclature to items. Use display names only for inputs and convert to ID in the input-handling function!
+
 
 };
 
 //runTest();
 //itemTest();
 //newItemTest()
-commanderTests();
+//commanderTests();
