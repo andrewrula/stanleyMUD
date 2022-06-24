@@ -10,21 +10,22 @@ Changelog
 
     Milestone 2:
         -Ported project to github.    
-        -Decided on item directory format.
+        -Item Expansion!        
+            -Decided on item directory format.
+            -REFACTOR: Support itemID vs display name
+            -Add Item Directory Object (support all current items?)
+            -Inspect Items -> read itemDesc property
+            -Inspect current room -> Display description
+            -Add "readContents" property to items
+                -Add Spellbook Item Description
+                -Teach Players About Teleporting!
+        Room Expansion 
+            -TECH DEBT: Refactor roomList to use better format
 
 TODO
     -User Input + Core Game Loop (User Input --> Game Does a Thing --> Ask for New Input )
         -Translation layer from input --> game terms    
-        -Help Command (To teach you to play)
-    -Item Expansion!
-        REFACTOR: Support itemID vs display name
-        -Add Item Directory (support all current items?)
-        -Inspect Items -> Read Description Out
-        -Teach Players About Teleporting!
-            -Add Item Descriptions
-    -Room Expansion
-        -TECH DEBT: Refactor roomList to use better format
-        -Inspect current room -> Display description
+        -Write Help Command (To teach you to play)
         -Flesh out room descriptions in RoomList
     -Refactor: Use items that arent keys
     -Dynamic Events (Events triggered on something happening)
@@ -56,3 +57,11 @@ TODO
             -Equipment
             -Inventory needs quantity
                 -Refactor pickUpItem to have quantity handling
+
+
+
+
+//Game Engine Notes
+//get node package manager
+//aka npm
+//prompt-sync
