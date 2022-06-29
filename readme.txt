@@ -13,3 +13,23 @@ Current Map should be:
  In BlueKeyRoom there is a Blue Key.
  In MHall there is a North-facing door. It needs both red and blue keys to open.
  In Vault is the Treasure.
+
+
+
+Second Dungeon
+-Only accessible by using the Teleport command.
+-Begin at Temple Entryway
+
+               [Temple Entryway]
+                      ||
+[Antechamber] =  [Temple Foyer] =  [Hall of Statues]
+                      ||              ||
+          [Assessment Chamber]     [Bathing Chamber]
+                        |x|
+[West Temple Stairs] = [Sanctuary] = [East Temple Stairs]
+                           |x|
+           [Library] = [Nexus of Magic] = [Portal]
+             |x|               ||
+     [Magicians Study]     [Sphinx's Chamber]
+                                      ||
+                                    [Exit]
