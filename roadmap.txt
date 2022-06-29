@@ -21,10 +21,11 @@ Changelog
                 -Teach Players About Teleporting!
         Room Expansion 
             -TECH DEBT: Refactor roomList to use better format
+        -Engine
+            -Develop Commander/Lieutenant, a translation layer from input --> game actions 
 
 TODO
     -User Input + Core Game Loop (User Input --> Game Does a Thing --> Ask for New Input )
-        -Translation layer from input --> game terms    
         -Write Help Command (To teach you to play)
         -Flesh out room descriptions in RoomList
     -Refactor: Use items that arent keys
@@ -33,7 +34,7 @@ TODO
         -Tons more rooms! 
             - Lots of keys of different forms 
         -Secret doors.
-            -Modify descriptions depending on door being detected.
+            -Permanently modify room descriptions depending on door being detected.
         -Solve puzzles!
             -Sphinx's Riddle
             -Shrine of the Silver Monkey
