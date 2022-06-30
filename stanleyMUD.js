@@ -327,20 +327,19 @@ function getLocationDescription(location){
     console.log(roomList[location].roomDesc)
 };
 
-//LIEUTENANT
-//Lieutenant is the service that is responsible for carrying out Commander's orders. It takes a command and determines if additional information is necessary.
+//ENGINE MANAGEMENT
+function lieutenant(verb, noun){//Lieutenant is the service that is responsible for carrying out Commander's orders. It takes a command and determines if additional information is necessary.
     // Help
     // Initialize
     // Admin
     // Move (ie: Go) [x]
-    // Pick Up
+    // Pick Up (ie Grab)
     // Use
     // Read
     // Teleport      [x]
     // Credits
     //Talk (ie: Approach)
     // Profane
-function lieutenant(verb, noun){
     if (verb == "move"||verb == "go"){
         noun = noun.toLowerCase();
         movePlayer(noun);
@@ -353,9 +352,7 @@ function lieutenant(verb, noun){
     }
 }
 
-//COMMANDER
-//Commander acts as the routing and translating function within stanleyMUD. It is the primary translation service. It is responsible for turning a player input into a well formed command to the LIEUTENANT service.
-function commander(command){
+function commander(command){//Commander acts as the routing and translating function within stanleyMUD. It is the primary translation service. It is responsible for turning a player input into a well formed command to the LIEUTENANT service.
     //Sanitize input. remove caps.
     verb = command.split(" ")[0].toLowerCase();
     //console.log(command.split(" ").length)
@@ -388,7 +385,27 @@ function commander(command){
     //If not add another word to verb
 };
 
+function dungeonMaster(question){//Dungeon Master describes the situation that you are currently in and prints the text to the console.log, then asks a question (typically "What do you do?")
+    
+}
 
+function help(topic){
+    if (topic == ""|topic == "me"){
+        console.log("General Help Text, Explaining To You How to utilize Verb-Noun Syntax.")
+        console.log("To play, type in what you would like to do. Simplicity is key here. Typically something like 'Move West' or 'Grab Key' or 'Look Around' works best. You can also learn about other commands by playing!")
+        console.log("As a bit of a cheat sheet, here's some verbs that work well: Help, Move, Grab, Use, Read, Talk, Look, Inspect, Read")
+        console.log("If you want more information about any of those, just type 'Help <topic>' - for example Help Move will bring up the Help page for the move command, in case you forgot how to walk.")
+        return;
+    };
+    if(topic == "move"|topic == "go"){
+        console.log("Oh, this one's easy. Just type 'Move <exit>.' A good example might be Move North, or Move Downstairs or Move Secret Bookshelf Door.");
+        console.log("Something like that, right?");
+    };
+    if (topic == "teleport" | topic == "teleportation" ){
+        console.log("Well, if you want to teleport, then you should probably find a spellbook to explain it. I'm just a help file afterall, not a proper wizard. Once you learn how though, you can just type 'Teleport <place>' and you'll immediately be brought there, so long as 'there' exists. Oh also, be careful, and don't miss!")
+    };
+
+}
 
 //TEST SUITE
 function runTest(){
