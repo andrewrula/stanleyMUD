@@ -1,5 +1,5 @@
 //INITIALIZE
-    console.log ("I am a startup message!")
+console.log ("I am a startup message!")
 var inventory = []; //Inventory is an array with the form [itemKey, itemKey, itemKey]
 var currentRoom = "entry"; //currentRoom is a simple value that contains the roomID of the player's current room
     console.log("Initialized currentRoom to " + currentRoom)
@@ -69,7 +69,28 @@ var roomList = {
         roomDesc: "A beautiful shrine to an unknown god. On the altar, a Blue Key is displayed.",
         contents: ["bluekey"],
         doors:{south: ["rhall", false]}
-    }
+    },
+    templeentry:{
+        roomID: "templeentry",
+        roomDisplayName: "Temple Entrance",
+        roomDesc: "An entranceway to a marvelous, white temple, nestled deep in the highest mountains. There is a door leading South into the rest of the temple, but no other exits. How could anyone have gotten here without magic?",
+        contents: [],
+        doors: {south: ["templefoyer", false]},
+    },
+    templefoyer:{
+        roomID: "templefoyer",
+        roomDisplayName: "Temple Foyer",
+        roomDesc: "",
+        contents: [],
+        doors: {north: ["templeentry", false], south: ["assessmentchamber", false], east: ["hallofstatues",false], west: ["templeantechamber", false]},
+    },
+    templeantechamber:{
+        roomID: "templeantechamber",
+        roomDisplayName: "Temple Antechamber",
+        roomDesc: "",
+        contents: [],
+        doors: {east: ["templefoyer", false]},
+    },
 };    
     console.log("Room List loaded with " + Object.keys(roomList).length + " rooms.")
 
@@ -329,15 +350,16 @@ function getLocationDescription(location){
 
 //ENGINE MANAGEMENT
 function lieutenant(verb, noun){//Lieutenant is the service that is responsible for carrying out Commander's orders. It takes a command and determines if additional information is necessary.
-    // Help
-    // Initialize
-    // Admin
-    // Move (ie: Go) [x]
-    // Pick Up (ie Grab)
-    // Use
-    // Read
-    // Teleport      [x]
-    // Credits
+    // [x]Help
+    // [ ] Initialize
+    // [ ] Admin
+    // [x]Move (ie: Go)
+    // [x]Pick Up (ie Grab)
+        //TODO: Refactor this to work with 2 word verbs
+    // [ ]Use
+    // [x]Read          
+    // [x] Teleport      
+    // [x]Credits
     //Talk (ie: Approach)
     // Profane
     if (verb == "move"||verb == "go"){
@@ -349,6 +371,15 @@ function lieutenant(verb, noun){//Lieutenant is the service that is responsible 
     }
     else if (verb == "read"){
         readItem(noun);
+    }
+    else if (verb == "help"){
+        help(noun);
+    }
+    else if (verb == "credits"){
+        playCredits()
+    }
+    else if (verb == "take" || verb == "get" || verb == "grab" || verb == "Pick up"){
+        itemPickUp(noun)
     }
 }
 
@@ -403,8 +434,15 @@ function help(topic){
     };
     if (topic == "teleport" | topic == "teleportation" ){
         console.log("Well, if you want to teleport, then you should probably find a spellbook to explain it. I'm just a help file afterall, not a proper wizard. Once you learn how though, you can just type 'Teleport <place>' and you'll immediately be brought there, so long as 'there' exists. Oh also, be careful, and don't miss!")
+        console.log("Also, you have enough magical power to teleport, right? Not having enough power would likely hurt a lot. Don't do that.")
     };
 
+}
+
+function playCredits(){
+    console.log("This whole game was made by Andrew Rula.")
+    console.log("This game is dedicated to Casey Patterson, who is excellent and indulges my silly hobbies.")
+    console.log("Special Thanks to Mike Kolbeck, who indulged approximately 4721 questions during the making of this game.")
 }
 
 //TEST SUITE
