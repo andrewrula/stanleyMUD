@@ -20,11 +20,11 @@ Second Dungeon
 -Only accessible by using the Teleport command.
 -Begin at Temple Entryway
 
-               [Temple Entryway]
+               [/Temple Entryway]
                       ||
-[Antechamber] =  [Temple Foyer] =  [Hall of Statues]
+[/Antechamber] =  [/Temple Foyer] =  [/Hall of Statues]
                       ||              ||
-          [Assessment Chamber]     [Bathing Chamber]
+          [Assessment Chamber]     [/Bathing Chamber]
                         |x|
 [West Temple Stairs] = [Sanctuary] = [East Temple Stairs]
                            |x|

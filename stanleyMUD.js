@@ -82,7 +82,7 @@ var roomList = {
         roomDisplayName: "Temple Foyer",
         roomDesc: "",
         contents: [],
-        doors: {north: ["templeentry", false], south: ["assessmentchamber", false], east: ["hallofstatues",false], west: ["templeantechamber", false]},
+        doors: {north: ["templeentry", false], south: ["templeassessmentchamber", false], east: ["templehallofstatues",false], west: ["templeantechamber", false]},
     },
     templeantechamber:{
         roomID: "templeantechamber",
@@ -90,6 +90,28 @@ var roomList = {
         roomDesc: "",
         contents: [],
         doors: {east: ["templefoyer", false]},
+    },
+    templehallofstatues:{
+        roomID: "templehallofstatues",
+        roomDisplayName: "Hall of Statues",
+        roomDesc: "",
+        contents: [],
+        doors: {west: ["templefoyer", false], south: ["templebathingchamber",false]},
+    },
+    templebathingchamber:{
+        roomID: "templebathingchamber",
+        roomDisplayName: "Bathing Chamber",
+        roomDesc: "",
+        contents: [],
+        doors: {north: ["templehallofstatues",false]},
+    },
+    templeassessmentchamber:{
+        roomID: "templeassessmentchamber",
+        roomDisplayName: "Assessment Chamber",
+        roomDesc: "",
+        contents: [],
+        doors: {north: ["templefoyer",false], south:["templesanctuary", true, "templecleanliness"]},
+        //TODO: Configure locks to be able to open based on condition.
     },
 };    
     console.log("Room List loaded with " + Object.keys(roomList).length + " rooms.")
@@ -350,36 +372,54 @@ function getLocationDescription(location){
 
 //ENGINE MANAGEMENT
 function lieutenant(verb, noun){//Lieutenant is the service that is responsible for carrying out Commander's orders. It takes a command and determines if additional information is necessary.
-    // [x]Help
+    //TODO: Refactor this to work with 2 word verbs  
     // [ ] Initialize
+        //Reset the state of the game
+        //Inventory reset, room reset, move player to entry, 
     // [ ] Admin
-    // [x]Move (ie: Go)
-    // [x]Pick Up (ie Grab)
-        //TODO: Refactor this to work with 2 word verbs
-    // [ ]Use
-    // [x]Read          
-    // [x] Teleport      
-    // [x]Credits
-    //Talk (ie: Approach)
+    // [ ] Use
+ 
+        //TODO: Update key function to be a generic use item function
+        //Use function should look at item type to determine how it can be used.
+    // [ ] Look Around
+    // [ ] Talk (ie: Approach)
     // Profane
-    if (verb == "move"||verb == "go"){
-        noun = noun.toLowerCase();
-        movePlayer(noun);
-    }
-    else if( verb == "teleport"){
-        tpPlayer(noun);
-    }
-    else if (verb == "read"){
-        readItem(noun);
-    }
-    else if (verb == "help"){
-        help(noun);
-    }
-    else if (verb == "credits"){
-        playCredits()
-    }
-    else if (verb == "take" || verb == "get" || verb == "grab" || verb == "Pick up"){
-        itemPickUp(noun)
+    switch(verb){
+        //Move
+        case "move":
+        case "go":
+            movePlayer(noun);
+            break;
+        //Teleport
+        case "teleport":
+            tpPlayer(noun);
+            break;
+        //Read
+        case "read":
+            readItem(noun);
+            break;
+        //Help
+        case "help":
+            help(noun);
+            break;
+        //Credits
+        case "credits":
+            playCredits();
+            break;
+        //Grab
+        case "take":
+        case "pick up":
+        case "grab":
+        case "get":
+            itemPickUp(noun);
+            break;
+        //Profane
+        case "fuck":
+            console.log("That's not a nice word. We need to maintain an ESRB rating here!");
+        //Default
+        default:
+            console.log("I did not understand that command. Try again.");
+            break;
     }
 }
 

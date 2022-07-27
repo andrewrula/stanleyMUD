@@ -26,18 +26,36 @@ Changelog
 
 TODO
     -User Input + Core Game Loop (User Input --> Game Does a Thing --> Ask for New Input )
-        -Write Help Command (To teach you to play)
         -Flesh out room descriptions in RoomList
-    -Refactor: Use items that arent keys
+        -Add game tick function at the end of a play cycle.
+            -Reduce timers on buffs/debuffs
+            -Regain mana?
+    -Fix Commander's fragility to caps
     -Dynamic Events (Events triggered on something happening)
+    -Refactor: Use items that arent keys
+    -Expand Help Command (To teach you to play)
+    -Add buffs/debuffs to player (Cleanliness in assessment room)
+        -Duration?
+        -System needs a concept of time
+        -How do rooms/things check buffs/debuffs?
+   
     -Dungeon Expansion 1 - The Ancient Temple!
-        -Tons more rooms! 
-            - Lots of keys of different forms 
+        -Add rooms in temple to roomlist (per readme file)
+        -Add items needed for temple to itemList
         -Secret doors.
             -Permanently modify room descriptions depending on door being detected.
+            -How to detect door?
+            -If exit through a door, unlock behind you?
+        -Assessment Room
+            -Refactor key check to make the final unlock a function
+            -Write a test event that manipulates a lock with not-a-key, which ideally calls the unlock function at the end.
+            -Give the player a buffList, which gains and loses buffs/debuffs on various conditions. Basically a second inventory for non-physical things.
+            -Way to get the buff in question
+            -Way to trigger the test event
         -Solve puzzles!
             -Sphinx's Riddle
             -Shrine of the Silver Monkey
+
 
     Milestone 3:
         -Menu screen on load
@@ -58,6 +76,8 @@ TODO
             -Equipment
             -Inventory needs quantity
                 -Refactor pickUpItem to have quantity handling
+                -Money handled specially
+
 
 
 
