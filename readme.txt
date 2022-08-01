@@ -24,12 +24,12 @@ Second Dungeon
                       ||
 [/Antechamber] =  [/Temple Foyer] =  [/Hall of Statues]
                       ||              ||
-          [Assessment Chamber]     [/Bathing Chamber]
+          [/Assessment Chamber]     [/Bathing Chamber]
                         |x|
-[West Temple Stairs] = [Sanctuary] = [East Temple Stairs]
-                           |x|
-           [Library] = [Nexus of Magic] = [Portal]
-             |x|               ||
+[/West Temple Stairs] = [/Sanctuary] = [/East Temple Stairs]
+  ||                       |x|                         ||
+[Balcony]  [Library] = [Nexus of Magic] = [Portal]    [Sun Puzzle Chamber]
+             |x|               ||  
      [Magicians Study]     [Sphinx's Chamber]
                                       ||
                                     [Exit]
