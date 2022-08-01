@@ -24,7 +24,7 @@ Second Dungeon
                       ||
 [/Antechamber] =  [/Temple Foyer] =  [/Hall of Statues]
                       ||              ||
-          [Assessment Chamber]     [/Bathing Chamber]
+          [/Assessment Chamber]     [/Bathing Chamber]
                         |x|
 [West Temple Stairs] = [Sanctuary] = [East Temple Stairs]
                            |x|

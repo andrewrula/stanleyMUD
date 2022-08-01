@@ -1,5 +1,9 @@
 //INITIALIZE
 console.log ("I am a startup message!")
+var player = {
+    HP: 5,
+    MP:5, 
+}
 var inventory = []; //Inventory is an array with the form [itemKey, itemKey, itemKey]
 var currentRoom = "entry"; //currentRoom is a simple value that contains the roomID of the player's current room
     console.log("Initialized currentRoom to " + currentRoom)
