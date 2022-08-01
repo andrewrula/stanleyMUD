@@ -203,6 +203,18 @@ function itemPickUp(plainTextItemName){
     
     }
 };
+function useItem(item){
+    var itemID = lookUpItemID(item);
+    var itemType = findItemType(itemID);
+    if (itemType == key){
+        //TODO: Prompt for direction
+        direction = ""
+        useKey(item, direction);
+    };
+    if(itemType == book){
+        readItemByID(itemID);
+    }  
+};
 function useKey(keyName, direction){
     //TODO: Refactor: Make this a more generic function
     //Init Vars
@@ -336,6 +348,25 @@ function readItem(plainTextItemName){
     var itemID = lookUpItemID(plainTextItemName);
         //console.log(itemID + " is itemID")
         //console.log(itemList[itemID])
+    if(typeof itemList[itemID] == "undefined"){
+        console.log("That's not a real item");
+        return;
+    }
+    if(itemList[itemID].hasOwnProperty("readContents")===false){
+        console.log("That item can not be read")
+        return;
+    }
+        //Do you have the item?
+    for (var i in inventory){
+        if(itemID == inventory[i]){
+            //print readContents of itemID
+            console.log(itemList[itemID].readContents)
+            return; 
+        }
+    }   console.log ("Item Not Found in Inventory");
+        return false;
+};
+function readItemByID(itemID){
     if(typeof itemList[itemID] == "undefined"){
         console.log("That's not a real item");
         return;

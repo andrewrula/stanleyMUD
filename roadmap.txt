@@ -16,6 +16,7 @@ Changelog
             -Add Item Directory Object (support all current items?)
             -Inspect Items -> read itemDesc property
             -Inspect current room -> Display description
+            -Use Items that aren't Keys
             -Add "readContents" property to items
                 -Add Spellbook Item Description
                 -Teach Players About Teleporting!
@@ -30,8 +31,9 @@ TODO
         -Flesh out room descriptions in RoomList
     -Fix Commander's fragility to caps
     -Dynamic Events (Events triggered on something happening)
-    -Refactor: Use items that arent keys
+    -Refactor: Figure out how to prompt for additional info for use-key.
     -Expand Help Command (To teach you to play)
+    -Add "Say" command
     -Add buffs/debuffs to player (Cleanliness in assessment room)
         -System needs a concept of time
         -How do rooms/things check buffs/debuffs?

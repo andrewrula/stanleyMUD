@@ -33,3 +33,14 @@ Second Dungeon
      [Magicians Study]     [Sphinx's Chamber]
                                       ||
                                     [Exit]
+
+
+In Antechamber there is a Broom. Broom can be used to remove dirt in Foyer and Hall of Statues.
+In Bathing Chamber there is a Bath. You can use it to become clean.
+    Entering a dirty room makes you dirty, and removes clean.
+In the Assessment Chamber there is a platform you can stand on.
+  WHen you stand on it, call out "Only a clean person can enter. Take a bath. Say "I am clean" when ready."
+  If you are clean when you stand on it and say "I am clean", open the door.
+  Otherwise, kill player for lying.
+  
+
