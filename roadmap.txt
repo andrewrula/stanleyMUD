@@ -16,29 +16,30 @@ Changelog
             -Add Item Directory Object (support all current items?)
             -Inspect Items -> read itemDesc property
             -Inspect current room -> Display description
+            -Use Items that aren't Keys
             -Add "readContents" property to items
                 -Add Spellbook Item Description
                 -Teach Players About Teleporting!
         Room Expansion 
             -TECH DEBT: Refactor roomList to use better format
         -Engine
-            -Develop Commander/Lieutenant, a translation layer from input --> game actions 
+            -Develop Commander/Lieutenant, a translation layer from input --> game actions
+            -Added "New Game" command to allow a restart of the game.
 
 TODO
     -User Input + Core Game Loop (User Input --> Game Does a Thing --> Ask for New Input )
         -Flesh out room descriptions in RoomList
-        -Add game tick function at the end of a play cycle.
-            -Reduce timers on buffs/debuffs
-            -Regain mana?
     -Fix Commander's fragility to caps
     -Dynamic Events (Events triggered on something happening)
-    -Refactor: Use items that arent keys
+    -Refactor: Figure out how to prompt for additional info for use-key.
     -Expand Help Command (To teach you to play)
+    -Add "Say" command
     -Add buffs/debuffs to player (Cleanliness in assessment room)
-        -Duration?
         -System needs a concept of time
         -How do rooms/things check buffs/debuffs?
-   
+            -Add game tick function at the end of a play cycle.
+                -Reduce timers on buffs/debuffs
+                -Regain mana?
     -Dungeon Expansion 1 - The Ancient Temple!
         -Add rooms in temple to roomlist (per readme file)
         -Add items needed for temple to itemList

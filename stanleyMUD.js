@@ -5,9 +5,9 @@ var player = {
     MP:5, 
 }
 var inventory = []; //Inventory is an array with the form [itemKey, itemKey, itemKey]
-var currentRoom = "entry"; //currentRoom is a simple value that contains the roomID of the player's current room
+var currentRoom = "entry"; //currentRoom is a simple string that contains the roomID of the player's current room
     console.log("Initialized currentRoom to " + currentRoom)
-var itemList = {//Provides a list of items and their associated properties
+var baseItemList = {//Provides a list of items and their associated properties
     itemListformat: {itemID: "name", type:"example", itemDesc: "Inspect to find this", readContents:"Read the item to see this"},
     redkey: {itemID: "Red Key", type: "key", itemDesc: "An ornate Red Key, found in the Red Key Room. It is the same color as one of the Vault door locks in the Main Hall."},
     bluekey:{itemID: "Blue Key", type: "key", itemDesc: "An ornate Blue Key, found in the Blue Key Room. It is the same color as one of the Vault door locks in the Main Hall."},
@@ -16,8 +16,7 @@ var itemList = {//Provides a list of items and their associated properties
     jewelrystone: {itemID: "Bejeweled Stone",type: "loot", itemDesc: "A stone cut as if it was a gemstone, with smooth facets on all sides. A princess cut, perhaps?"},
     spellbookbasic:{itemID: "Basic Spellbook",type: "book", itemDesc: "A spellbook you found amidst the treasure. Its pages are covered in arcane diagrams. Meant for reading.", readContents: "A simple spellbook, bound in purple and navy. It's cover resembles a starfield. Within, you learn the secrets to shifting the world beneath your feet. By merely commanding oneself to |Teleport|, you could arrive at any room you can name. (ie: 'Teleport Vault') There is also a lot of other text warning about mutations in the fundamental state of reality, but none of that seems nearly as interesting as teleportation!"},
 };
-    console.log("Item List loaded with " + Object.keys(itemList).length + " items.")
-var roomList = {
+var baseRoomList = {
     roomListFormat:{
         roomID: "name",
         roomDisplayName: "Plain Text Room Name",
@@ -117,9 +116,33 @@ var roomList = {
         doors: {north: ["templefoyer",false], south:["templesanctuary", true, "templecleanliness"]},
         //TODO: Configure locks to be able to open based on condition.
     },
+    templesanctuary:{
+        roomID: "templesanctuary",
+        roomDisplayName: "Sanctuary",
+        roomDesc: "",
+        contents: [],
+        doors: {north: ["templeassessmentchamber",false], south:["templenexusofmagic", true, "NYI"], west:["templeweststairs",false], east:["templeeaststairs", false]},
+        //TODO: Implement nexus lock
+    },
+    templeweststairs:{
+        roomID: "templeweststairs",
+        roomDisplayName: "West Temple Staircase",
+        roomDesc: "",
+        contents: [],
+        doors: {upstairs: ["templebalcony",false], downstairs:["templesanctuary", false]},
+    },
+    templeeaststairs:{
+        roomID: "templeeaststairs",
+        roomDisplayName: "East Temple Staircase",
+        roomDesc: "",
+        contents: [],
+        doors: {downstairs: ["templepuzzlechamber",false], upstairs:["templesanctuary", false]},
+    },
 };    
-    console.log("Room List loaded with " + Object.keys(roomList).length + " rooms.")
-
+var itemList = baseItemList;
+var roomList = baseRoomList;
+console.log("Item List loaded with " + Object.keys(itemList).length + " items.")
+console.log("Room List loaded with " + Object.keys(roomList).length + " rooms.")
 
 //ITEM RELATED
 function lookUpDisplayName(itemKey){//Looks up the display name of an itemKey
@@ -127,10 +150,8 @@ function lookUpDisplayName(itemKey){//Looks up the display name of an itemKey
     return itemList[itemKey].itemID;
 };
 function lookUpItemID(displayName){//Looks up the itemID of a display name
-    //BROKEN DUE TO NEW ITEM LIST.
     console.log("looking for " + displayName)   
     for (const i in itemList){
-        //console.log("key is " + i);
         if(itemList[i].itemID == displayName){
             console.log("Returning " + i)
             return i;
@@ -185,6 +206,18 @@ function itemPickUp(plainTextItemName){
         //  -Is locked? <future function goes here probably
     
     }
+};
+function useItem(item){
+    var itemID = lookUpItemID(item);
+    var itemType = findItemType(itemID);
+    if (itemType == key){
+        //TODO: Prompt for direction
+        direction = ""
+        useKey(item, direction);
+    };
+    if(itemType == book){
+        readItemByID(itemID);
+    }  
 };
 function useKey(keyName, direction){
     //TODO: Refactor: Make this a more generic function
@@ -337,7 +370,30 @@ function readItem(plainTextItemName){
     }   console.log ("Item Not Found in Inventory");
         return false;
 };
+function readItemByID(itemID){
+    if(typeof itemList[itemID] == "undefined"){
+        console.log("That's not a real item");
+        return;
+    }
+    if(itemList[itemID].hasOwnProperty("readContents")===false){
+        console.log("That item can not be read")
+        return;
+    }
+        //Do you have the item?
+    for (var i in inventory){
+        if(itemID == inventory[i]){
+            //print readContents of itemID
+            console.log(itemList[itemID].readContents)
+            return; 
+        }
+    }   console.log ("Item Not Found in Inventory");
+        return false;
+};
+function findItemType(itemID){
+    //TODO: Handle not-an-item issues
+    return itemList[itemID].type;
 
+}
 //MOVEMENT RELATED
 function movePlayer(direction){//Moves Player in the noted direction
     console.log("Moving player " + direction + " from " + currentRoom)
@@ -375,20 +431,26 @@ function getLocationDescription(location){
 };
 
 //ENGINE MANAGEMENT
+function newGame(){
+    inventory = []
+    currentRoom = "entry"
+    itemList = baseItemList;
+    roomList = baseRoomList;
+//TODO: Add in notes to update player state back to default.
+};
+
 function lieutenant(verb, noun){//Lieutenant is the service that is responsible for carrying out Commander's orders. It takes a command and determines if additional information is necessary.
     //TODO: Refactor this to work with 2 word verbs  
-    // [ ] Initialize
-        //Reset the state of the game
-        //Inventory reset, room reset, move player to entry, 
     // [ ] Admin
     // [ ] Use
- 
         //TODO: Update key function to be a generic use item function
         //Use function should look at item type to determine how it can be used.
-    // [ ] Look Around
-    // [ ] Talk (ie: Approach)
-    // Profane
     switch(verb){
+        //Initialize
+        case "new game":
+        case "initialize":
+            newGame();
+            break;
         //Move
         case "move":
         case "go":
@@ -397,6 +459,15 @@ function lieutenant(verb, noun){//Lieutenant is the service that is responsible 
         //Teleport
         case "teleport":
             tpPlayer(noun);
+            break;
+        //Look Around
+        case "look":
+        case "explore":
+            getLocationDescription(noun);
+            break;
+        //Inspect
+        case "inspect":
+            inspectItem(noun);
             break;
         //Read
         case "read":
@@ -417,6 +488,12 @@ function lieutenant(verb, noun){//Lieutenant is the service that is responsible 
         case "get":
             itemPickUp(noun);
             break;
+        //Talk
+        case "talk":
+        case "approach":
+        case "chat":
+            console.log("Conversations not implemented yet");
+            break;
         //Profane
         case "fuck":
             console.log("That's not a nice word. We need to maintain an ESRB rating here!");
@@ -425,7 +502,7 @@ function lieutenant(verb, noun){//Lieutenant is the service that is responsible 
             console.log("I did not understand that command. Try again.");
             break;
     }
-}
+};
 
 function commander(command){//Commander acts as the routing and translating function within stanleyMUD. It is the primary translation service. It is responsible for turning a player input into a well formed command to the LIEUTENANT service.
     //Sanitize input. remove caps.
@@ -462,7 +539,7 @@ function commander(command){//Commander acts as the routing and translating func
 
 function dungeonMaster(question){//Dungeon Master describes the situation that you are currently in and prints the text to the console.log, then asks a question (typically "What do you do?")
     
-}
+};
 
 function help(topic){
     if (topic == ""|topic == "me"){
@@ -481,13 +558,13 @@ function help(topic){
         console.log("Also, you have enough magical power to teleport, right? Not having enough power would likely hurt a lot. Don't do that.")
     };
 
-}
+};
 
 function playCredits(){
     console.log("This whole game was made by Andrew Rula.")
     console.log("This game is dedicated to Casey Patterson, who is excellent and indulges my silly hobbies.")
     console.log("Special Thanks to Mike Kolbeck, who indulged approximately 4721 questions during the making of this game.")
-}
+};
 
 //TEST SUITE
 function runTest(){
