@@ -407,19 +407,19 @@ function findItemType(itemID){
 //MOVEMENT RELATED
 function movePlayer(direction){//Moves Player in the noted direction
     console.log("Moving player " + direction + " from " + currentRoom)
-//Fails out if direction not found.
+    //Fails out if direction not found.
     if (roomList[currentRoom].doors.hasOwnProperty(direction)===false){
         console.log("You can not go that direction.");
         return
-}
+    }
 
-//Locked door check
-if(roomList[currentRoom].doors[direction][1] === false){
+    //Locked door check
+    if(roomList[currentRoom].doors[direction][1] === false){
         console.log("No lock detected! Move accepted.");
     }else if(roomList[currentRoom].doors[direction][1] === true){
         console.log("The Door is Locked! Stopping move.")
         return;
-    }
+    };
 
 //Set currentRoom to the destination.
 currentRoom = roomList[currentRoom].doors[direction][0]
@@ -441,6 +441,13 @@ function tpPlayer(room){//Teleports player to target room.
 function getLocationDescription(location){
     console.log(roomList[location].roomDesc)
 };
+
+//ACTION RELATED
+function playerSpeak(words){
+    var userInput = words
+    console.log (`You say "${userInput}"`)
+    //TODO: Response function. (Handled by lieutenant?)
+}
 
 //ENGINE MANAGEMENT
 function newGame(){
@@ -512,7 +519,7 @@ function lieutenant(verb, noun){//Lieutenant is the service that is responsible 
         //Say
         case "say":
         case "speak":
-            console.log("Speaking not implemented yet.")
+            playerSpeak(noun);    
             break;
         //Profane
         case "fuck":
@@ -527,7 +534,8 @@ function lieutenant(verb, noun){//Lieutenant is the service that is responsible 
 function commander(command){//Commander acts as the routing and translating function within stanleyMUD. It is the primary translation service. It is responsible for turning a player input into a well formed command to the LIEUTENANT service.
     //TODO: Refactor this to work with 2 word verbs and 2 word nouns
     //Sanitize input. remove caps.
-    verb = command.split(" ")[0].toLowerCase();
+    command = command.toLowerCase();
+    verb = command.split(" ")[0];
     //console.log(command.split(" ").length)
     
     //If command is only one word, that word is a verb and we should return a blank string as the noun
@@ -556,6 +564,7 @@ function commander(command){//Commander acts as the routing and translating func
     //Possible flow for multi-word verbs?
     //ID first verb. If it clicks, set rest for noun.
     //If not add another word to verb
+    //Look at convo with Mike to determine strategy here.
 };
 
 function seer(question){//Seer is a Question Asker. It asks the user a question and returns the user's answer.
@@ -568,35 +577,90 @@ function dungeonMaster(question){//Dungeon Master describes the situation that y
 };
 
 function help(topic){
-    if (topic == ""|topic == "me"){
-        console.log("General Help Text, Explaining To You How to utilize Verb-Noun Syntax.")
-        console.log("To play, type in what you would like to do. Simplicity is key here. Typically something like 'Move West' or 'Grab Key' or 'Look Around' works best. You can also learn about other commands by playing!")
-        console.log("As a bit of a cheat sheet, here's some verbs that work well: Help, Move, Grab, Use, Read, Talk, Look, Inspect")
-        console.log("If you want more information about any of those, just type 'Help <topic>' - for example Help Move will bring up the Help page for the move command, in case you forgot how to walk.")
-        return;
-    };
-    if(topic == "move"|topic == "go"){
-        console.log("Oh, this one's easy. Just type 'Move <exit>.' A good example might be Move North, or Move Downstairs or Move Secret Bookshelf Door.");
-        console.log("Something like that, right?");
-    };
-    if (topic == "teleport" | topic == "teleportation" ){
-        console.log("Well, if you want to teleport, then you should probably find a spellbook to explain it. I'm just a help file afterall, not a proper wizard. Once you learn how though, you can just type 'Teleport <place>' and you'll immediately be brought there, so long as 'there' exists. Oh also, be careful, and don't miss!")
-        console.log("Also, you have enough magical power to teleport, right? Not having enough power would likely hurt a lot. Don't do that.")
-    };
-
+    switch(topic){
+        //General Help
+        case "":
+        case "me":
+            console.log("General Help Text, Explaining To You How to utilize Verb-Noun Syntax.")
+            console.log("To play, type in what you would like to do. Simplicity is key here. Typically something like 'Move West' or 'Grab Key' or 'Look Around' works best. You can also learn about other commands by playing!");
+            console.log("As a bit of a cheat sheet, here's some verbs that work well: Help, Move, Grab, Use, Read, Talk, Look, Inspect");
+            console.log("If you want more information about any of those, just type 'Help <topic>' - for example 'Help Move' will bring up the Help page for the move command, in case you forgot how to walk.");
+            break;
+        //Movement Help
+        case "move":
+        case "go":
+        case "walk":
+            console.log("Oh, this one's easy. Just type 'Move <exit>.' A good example might be 'Move North', or 'Move Downstairs' or 'Move Secret Bookshelf Door'.");
+            console.log("Something like that, right?");
+            break;
+        //Teleport Help
+        case "teleport":
+        case "teleportation":
+            console.log("Well, if you want to teleport, then you should probably find a spellbook to explain it. I'm just a help file afterall, not a proper wizard. Once you learn how though, you can just type 'Teleport <place>' and you'll immediately be brought there, so long as 'there' exists. Oh also, be careful, and don't miss!")
+            console.log("Also, you have enough magical power to teleport, right? Not having enough power would likely hurt a lot. Don't do that.");
+            break;
+        //Pick Up Help
+        case "grab":
+        case "pick up":
+        case "snag":
+            console.log("To pick something up, just type 'Grab <itemName>'.");
+            console.log("For example, 'Grab food' or 'pick up screwdriver'.");
+            console.log("Some people or objects might not appreciate being grabbed. Consent is important when dealing with thinking things.")
+            break;
+        //Use Help
+        case "use":
+            console.log("Use is a complicated one! You can use just about every item, but what happens will be different depending on what the item is.");
+            console.log("For example 'Use Novel' will read the book Novel if it's in your inventory. 'Use Red Key' will use the Red Key on a door. (You will be prompted to input where you want to use the key.)");
+            console.log("There are tons of items to use. Experiment with them!");
+            break;
+        //Read Help
+        case "read":
+            console.log("If you want to get more specific than 'use' for a given item, and you want to explicitly read it rather than do anything else with it, use the verb 'read'.")
+            console.log("For example, 'Use Fireball Spellbook' might create a fireball if you use it. But 'Read Fireball Spellbook' will give you the text of the book instead.")
+            console.log("I mean, no promises that a Fireball Spellbook will be intelligible. Maybe be sure you can read whatever arcane language its in first?")
+            break;
+        //Talk Help
+        case "talk":
+        case "approach":
+            console.log("Both 'talk' and 'approach' will begin a conversation with the noun provided. Some things are not good conversationalists.");
+            break;
+        //Inspect Help
+        case "look":
+        case "inspect":
+            console.log("Verbs like 'look' and 'inspect' will give you more information about an object.")
+            console.log("A note here that inspecting a book will give you a description of the book, and not the text of the book.")
+            console.log("If you want to read the book, try using the 'read' verb.")
+            break;
+        //Say
+        case "say":
+        case "utter":
+            console.log("Here in this game, we're not a big fan of silent-protagonists, so we've given you the ability to speak words.")
+            console.log("If you're talking to someone, using the say verb will respond to whatever they said to you.")
+            console.log("If you're not in a conversation, you'll just say whatever you type in. For example 'Say bread' will exclaim about gluten.")
+            break;
+        //Fallback Failure
+        default:
+            console.log("Er, sorry. I don't know anything about that. Maybe try something else?")
+            //TODO: Log the incorrect statement so we can add it to this matrix later.
+            break;
+        };
 };
 
 function playCredits(){
     console.log("This whole game was made by Andrew Rula.")
-    console.log("This game is dedicated to Casey Patterson, who is excellent and indulges my silly hobbies.")
-    console.log("Special Thanks to Mike Kolbeck, who indulged approximately 4721 questions during the making of this game.")
+    console.log("This game is dedicated to Casey Patterson, who is excellent and indulges both my silly hobbies and excessive explanations.")
+    console.log("Special Thanks to Mike Kolbeck, who indulged approximately 4721* questions during the making of this game.")
 };
+
 
 //ADMIN COMMANDS
 function adminRouter(){//routes the command from Lieutenant into the correct admin function
-
-    
-    
+    //List Admin Commands Needed
+    //Admin Teleport
+    //Admin Give Item
+    //Admin Remove Item
+    //Admin Give Buff
+    //Admin Remove Buff
 };
 
 //TEST SUITE
@@ -672,4 +736,3 @@ function commanderTests(){
 //itemTest();
 //newItemTest()
 //commanderTests();
-

@@ -24,18 +24,17 @@ Changelog
             -TECH DEBT: Refactor roomList to use better format
         -Engine
             -Develop Commander/Lieutenant, a translation layer from input --> game actions
+                -Fix Commander's fragility to caps
             -Added "New Game" command to allow a restart of the game.
+            -Add "Say" command
+            -Add "Help" command
 
 TODO
     -User Input + Core Game Loop (User Input --> Game Does a Thing --> Ask for New Input )
-
         -Implement Seer
-    -Fix Commander's fragility to caps
+        -New Game —> Dungeon Master asks “wdyd” —> user types —> commander processes command —> lieutenant executes command (with Seer’s help if additional info needed) —> check for events firing —> dungeon master displays text and asks “wdyd”
     -Dynamic Events (Events triggered on something happening)
     -Refactor: Figure out how to prompt for additional info for use-key.
-    -Expand Help Command (To teach you to play)
-    -Add "Say" command
-
     -Add buffs/debuffs to player (Cleanliness in assessment room)
         -System needs a concept of time
         -How do rooms/things check buffs/debuffs?
