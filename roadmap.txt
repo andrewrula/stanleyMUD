@@ -28,12 +28,14 @@ Changelog
 
 TODO
     -User Input + Core Game Loop (User Input --> Game Does a Thing --> Ask for New Input )
-        -Flesh out room descriptions in RoomList
+
+        -Implement Seer
     -Fix Commander's fragility to caps
     -Dynamic Events (Events triggered on something happening)
     -Refactor: Figure out how to prompt for additional info for use-key.
     -Expand Help Command (To teach you to play)
     -Add "Say" command
+
     -Add buffs/debuffs to player (Cleanliness in assessment room)
         -System needs a concept of time
         -How do rooms/things check buffs/debuffs?
@@ -42,6 +44,7 @@ TODO
                 -Regain mana?
     -Dungeon Expansion 1 - The Ancient Temple!
         -Add rooms in temple to roomlist (per readme file)
+        -Flesh out room descriptions in RoomList
         -Add items needed for temple to itemList
         -Secret doors.
             -Permanently modify room descriptions depending on door being detected.

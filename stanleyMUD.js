@@ -455,7 +455,7 @@ function newGame(){
 };
 
 function lieutenant(verb, noun){//Lieutenant is the service that is responsible for carrying out Commander's orders. It takes a command and determines if additional information is necessary.
-    //TODO: Refactor this to work with 2 word verbs  
+     
     // [ ] Admin
     // [ ] Use
         //TODO: Update key function to be a generic use item function
@@ -509,6 +509,11 @@ function lieutenant(verb, noun){//Lieutenant is the service that is responsible 
         case "chat":
             console.log("Conversations not implemented yet");
             break;
+        //Say
+        case "say":
+        case "speak":
+            console.log("Speaking not implemented yet.")
+            break;
         //Profane
         case "fuck":
             console.log("That's not a nice word. We need to maintain an ESRB rating here!");
@@ -520,6 +525,7 @@ function lieutenant(verb, noun){//Lieutenant is the service that is responsible 
 };
 
 function commander(command){//Commander acts as the routing and translating function within stanleyMUD. It is the primary translation service. It is responsible for turning a player input into a well formed command to the LIEUTENANT service.
+    //TODO: Refactor this to work with 2 word verbs and 2 word nouns
     //Sanitize input. remove caps.
     verb = command.split(" ")[0].toLowerCase();
     //console.log(command.split(" ").length)
@@ -586,8 +592,16 @@ function playCredits(){
     console.log("Special Thanks to Mike Kolbeck, who indulged approximately 4721 questions during the making of this game.")
 };
 
+//ADMIN COMMANDS
+function adminRouter(){//routes the command from Lieutenant into the correct admin function
+
+    
+    
+};
+
 //TEST SUITE
 function runTest(){
+    newGame();
     movePlayer("north");
     itemPickUp("blork")
     movePlayer("west");
@@ -658,3 +672,4 @@ function commanderTests(){
 //itemTest();
 //newItemTest()
 //commanderTests();
+
