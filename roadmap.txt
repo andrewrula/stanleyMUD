@@ -17,6 +17,7 @@ Changelog
             -Inspect Items -> read itemDesc property
             -Inspect current room -> Display description
             -Use Items that aren't Keys
+            -Refactor: Figure out how to prompt for additional info for use-key.
             -Add "readContents" property to items
                 -Add Spellbook Item Description
                 -Teach Players About Teleporting!
@@ -24,25 +25,29 @@ Changelog
             -TECH DEBT: Refactor roomList to use better format
         -Engine
             -Develop Commander/Lieutenant, a translation layer from input --> game actions
-                -Fix Commander's fragility to caps
+
             -Added "New Game" command to allow a restart of the game.
             -Add "Say" command
             -Add "Help" command
         -User Input + Core Game Loop (User Input --> Game Does a Thing --> Ask for New Input )
             -Implement Seer
             -New Game —> Dungeon Master asks “wdyd” —> user types —> commander processes command —> lieutenant executes command (with Seer’s help if additional info needed) —> dungeon master displays text and asks “wdyd”
+        -Add buffs/debuffs to player
 TODO
-
-
+    Test Suite
+        -Learn how to Jest
+    
+    Refactor Commander
+        -Fix fragility to caps
+    
     -Dynamic Events (Events triggered on something happening)
-                check for events firing at end of dungeonMaster 
-    -Refactor: Figure out how to prompt for additional info for use-key.
-    -Add buffs/debuffs to player (Cleanliness in assessment room)
+        -check for events firing at end of dungeonMaster 
         -System needs a concept of time
         -How do rooms/things check buffs/debuffs?
             -Add game tick function at the end of a play cycle.
                 -Reduce timers on buffs/debuffs
                 -Regain mana?
+    
     -Dungeon Expansion 1 - The Ancient Temple!
         -Add rooms in temple to roomlist (per readme file)
         -Flesh out room descriptions in RoomList
@@ -54,6 +59,7 @@ TODO
         -Assessment Room
             -Refactor key check to make the final unlock a function
             -Write a test event that manipulates a lock with not-a-key, which ideally calls the unlock function at the end.
+                (Cleanliness in assessment room)
             -Give the player a buffList, which gains and loses buffs/debuffs on various conditions. Basically a second inventory for non-physical things.
             -Way to get the buff in question
             -Way to trigger the test event

@@ -2,7 +2,8 @@
 console.log ("I am a startup message!")
 var basePlayer = {
     HP: 5,
-    MP:5, 
+    MP:5,
+    buffs:{}, 
 };
 
 var baseItemList = {//Provides a list of items and their associated properties
@@ -139,8 +140,12 @@ var baseRoomList = {
     },
 }; 
 
-const prompt = require('prompt-sync')();
+var buffList = { //duration -1 = infinite
+    cleanliness:{buffID: "cleanliness", type:"buff", duration:-1, hidden:false}
+};
 
+const prompt = require('prompt-sync')();
+    //adds prompt-sync as a callable function.
 var itemList = {};
 var roomList = {};
 var player = {};
@@ -465,7 +470,7 @@ function playerSpeak(words){
 function newGame(){
     inventory = []
     currentRoom = "entry"
-    player = basePlayer
+    player = basePlayer;
     itemList = baseItemList;
     roomList = baseRoomList;
     console.log("Item List loaded with " + Object.keys(itemList).length + " items.")
@@ -494,6 +499,7 @@ function lieutenant(verb, noun){//Lieutenant is the service that is responsible 
         //Use
         case "use":
             useItem(noun);
+            break;
         //Teleport
         case "teleport":
             tpPlayer(noun);
@@ -540,6 +546,7 @@ function lieutenant(verb, noun){//Lieutenant is the service that is responsible 
         //Profane
         case "fuck":
             console.log("That's not a nice word. We need to maintain an ESRB rating here!");
+            break;
         //Default
         default:
             console.log("I did not understand that command. Try again.");
@@ -589,7 +596,7 @@ function seer(question){//Seer is a Question Asker. It asks the user a question 
     return answer;
 };
 
-function dungeonMaster(){//Dungeon Master describes the situation that you are currently in and prints the text to the console.log, then asks a question (typically "What do you do?")
+function dungeonMaster(){//Dungeon Master describes the situation that you are currently in and prints the text to the console.log, then asks "What do you do?"
     //TODO: Print the output of events and other stuff
     console.log("What do you do?")
     answer = prompt();
@@ -684,7 +691,7 @@ function adminRouter(){//routes the command from Lieutenant into the correct adm
     //Admin Remove Buff
 };
 
-//TEST SUITE
+//'TEST SUITE'
 function runTest(){
     newGame();
     movePlayer("north");
@@ -758,5 +765,5 @@ function commanderTests(){
 //newItemTest()
 //commanderTests();
 
-newGame();
+
 dungeonMaster();
