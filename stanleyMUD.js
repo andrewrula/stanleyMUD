@@ -139,6 +139,8 @@ var baseRoomList = {
     },
 }; 
 
+const prompt = require('prompt-sync')();
+
 var itemList = {};
 var roomList = {};
 var player = {};
@@ -154,6 +156,7 @@ function lookUpDisplayName(itemKey){//Looks up the display name of an itemKey
 function lookUpItemID(displayName){//Looks up the itemID of a display name
     console.log("looking for " + displayName)   
     for (const i in itemList){
+        console.log(itemList[i]);
         if(itemList[i].itemID == displayName){
             console.log("Returning " + i)
             return i;
@@ -214,13 +217,14 @@ function itemPickUp(plainTextItemName){
 function useItem(item){
     var itemID = lookUpItemID(item);
     var itemType = findItemType(itemID);
-    if (itemType == key){
-        //TODO: Prompt for direction
-        direction = ""
-        useKey(item, direction);
+    if (itemType == "key"){
+        direction = seer("Which door do you want to unlock?")
+        useKey(itemID, direction);
+        return;
     };
     if(itemType == book){
         readItemByID(itemID);
+        return;
     }  
 };
 
@@ -431,14 +435,22 @@ getLocationDescription(currentRoom);
 };
 
 function tpPlayer(room){//Teleports player to target room.
-    //TODO: Add teleport safety rails for incorrect room name.
+for (const i in roomList){
+    if(roomList[i] == room){
+        console.log("Player casts a teleportation spell in " + currentRoom)
+        currentRoom = room;
+        console.log ("Player has reappeared in " + currentRoom)
+        return;
+    };
+};
+    console.log("That room doesn't exist"); 
+    return;   
     //TODO: Add support for roomDisplayName in both inputs and outputs.
-    console.log("Player casts a teleportation spell in " + currentRoom)
-    currentRoom = room;
-    console.log ("Player has reappeared in " + currentRoom)
+    
 };
 
 function getLocationDescription(location){
+    //TODO: Protect against location being undefined.
     console.log(roomList[location].roomDesc)
 };
 
@@ -470,6 +482,7 @@ function lieutenant(verb, noun){//Lieutenant is the service that is responsible 
     switch(verb){
         //Initialize
         case "new game":
+            //TODO: Does not work because of bad commander parsing.
         case "initialize":
             newGame();
             break;
@@ -478,6 +491,9 @@ function lieutenant(verb, noun){//Lieutenant is the service that is responsible 
         case "go":
             movePlayer(noun);
             break;
+        //Use
+        case "use":
+            useItem(noun);
         //Teleport
         case "teleport":
             tpPlayer(noun);
@@ -534,8 +550,8 @@ function lieutenant(verb, noun){//Lieutenant is the service that is responsible 
 function commander(command){//Commander acts as the routing and translating function within stanleyMUD. It is the primary translation service. It is responsible for turning a player input into a well formed command to the LIEUTENANT service.
     //TODO: Refactor this to work with 2 word verbs and 2 word nouns
     //Sanitize input. remove caps.
-    command = command.toLowerCase();
-    verb = command.split(" ")[0];
+    //command = command.toLowerCase();
+    verb = command.split(" ")[0].toLowerCase();
     //console.log(command.split(" ").length)
     
     //If command is only one word, that word is a verb and we should return a blank string as the noun
@@ -556,8 +572,8 @@ function commander(command){//Commander acts as the routing and translating func
         }
         noun = noun.join(" ");
     }
-    //console.log(verb);
-    //console.log(noun);
+    console.log(verb);
+    console.log(noun);
     lieutenant(verb, noun);
 
 
@@ -568,12 +584,17 @@ function commander(command){//Commander acts as the routing and translating func
 };
 
 function seer(question){//Seer is a Question Asker. It asks the user a question and returns the user's answer.
-    
-
+    console.log(question);
+    var answer = prompt();
+    return answer;
 };
 
-function dungeonMaster(question){//Dungeon Master describes the situation that you are currently in and prints the text to the console.log, then asks a question (typically "What do you do?")
-    
+function dungeonMaster(){//Dungeon Master describes the situation that you are currently in and prints the text to the console.log, then asks a question (typically "What do you do?")
+    //TODO: Print the output of events and other stuff
+    console.log("What do you do?")
+    answer = prompt();
+    commander(answer);
+    dungeonMaster();
 };
 
 function help(topic){
@@ -736,3 +757,6 @@ function commanderTests(){
 //itemTest();
 //newItemTest()
 //commanderTests();
+
+newGame();
+dungeonMaster();

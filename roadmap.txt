@@ -28,12 +28,14 @@ Changelog
             -Added "New Game" command to allow a restart of the game.
             -Add "Say" command
             -Add "Help" command
-
+        -User Input + Core Game Loop (User Input --> Game Does a Thing --> Ask for New Input )
+            -Implement Seer
+            -New Game —> Dungeon Master asks “wdyd” —> user types —> commander processes command —> lieutenant executes command (with Seer’s help if additional info needed) —> dungeon master displays text and asks “wdyd”
 TODO
-    -User Input + Core Game Loop (User Input --> Game Does a Thing --> Ask for New Input )
-        -Implement Seer
-        -New Game —> Dungeon Master asks “wdyd” —> user types —> commander processes command —> lieutenant executes command (with Seer’s help if additional info needed) —> check for events firing —> dungeon master displays text and asks “wdyd”
+
+
     -Dynamic Events (Events triggered on something happening)
+                check for events firing at end of dungeonMaster 
     -Refactor: Figure out how to prompt for additional info for use-key.
     -Add buffs/debuffs to player (Cleanliness in assessment room)
         -System needs a concept of time
