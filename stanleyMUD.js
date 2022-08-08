@@ -140,7 +140,7 @@ var baseRoomList = {
     },
 }; 
 
-var buffList = { //duration -1 = infinite
+var buffList = { //Duration in turnsl; Duration -1 = infinite
     cleanliness:{buffID: "cleanliness", type:"buff", duration:-1, hidden:false}
 };
 
